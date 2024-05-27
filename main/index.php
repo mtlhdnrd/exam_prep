@@ -25,8 +25,20 @@
         <div class="listing" id="tortdiv">
             <?php
             if(!empty($_GET['query'])){
-                $query = $_GET['query'];
-                print $query;
+                $items = [];
+                $search = $_GET['query'];
+                $sql = "SELECT cim FROM 'tetelcimek' WHERE id = ? OR cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;";
+                $stmt = $conn ->prepare($sql);
+                $se = "%".$search."%";
+                $id = intval($search);
+                $stmt->bind_param("isss", $id,$se,$se,$se);
+                if($stmt->execute()==true){
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) { 
+                        array_push($items, $row); 
+                    }
+                }
+                $conn->close();
             }
             ?>
             <h2>Történelem</h2>
