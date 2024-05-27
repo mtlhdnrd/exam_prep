@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    scrollbar-width: none; /* Remove scrollbar for Firefox */
+}
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar width */
+    height: 0; /* Remove scrollbar height */
+}
+
+
+h1{
+    font-size: 70px;
+    margin: 20px;
+    color: white;
+    font-weight:600;
+}
+
+h2{
+    color: rgb(216, 47, 47);
+    text-transform: uppercase;
+}
+
+h2, h3{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+header{
+    background-image: url(../img/header.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: blue;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: darkblue;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start; /*change to center at mobile mode*/
+    align-items: center;
+    padding-bottom: 0px;
+}
+
+.nav-item {
+    padding: 14px 30px;
+    font-size: 16px;
+    border-radius: 5% 40% 0% 0%;
+    font-weight: bold;
+    color: white;
+}
+
+.item1 {
+    background-color: #c3b3ec; /* Red */
+}
+
+.item2 {
+    background-color: #d3aeaa; /* Purple */
+}
+
+.item3 {
+    background-color: #cde0b0; /* Green */
+}
+
+.nav-item:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.search-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.search-container input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.search-container button{
+    flex-grow: 1;
+}
+
+main{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+footer{
+    background-color: rgb(34, 34, 73);
+    height: 250px;
+}
+
+.listing{
+    border: 1px black solid; 
+    height: fit-content;
+    width: 100%;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style-type: dot;
+}
+
+li{
+    width: 280px;   /*fix later*/
+    color: rgb(113, 152, 224);
+}
+
+a, a:hover, a:active, a:visited{
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+
+    .nav-item {
+        margin: 5px 0;
+    }
+
+    .search-container {
+        margin-top: 10px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .listing{
+        justify-content: center;
+    }
+
+    li{
+        width: 100%;
+    }
+}
