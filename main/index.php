@@ -25,25 +25,26 @@
         <div class="listing" id="tortdiv">
             <?php
             if(!empty($_GET['query'])){
-                $items = [];
-                $search = $_GET['query'];
-                $sql = "SELECT cim FROM 'tetelcimek' WHERE id = ? OR cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;";
-                $stmt = $conn ->prepare($sql);
-                $se = "%".$search."%";
-                $id = intval($search);
-                $stmt->bind_param("isss", $id,$se,$se,$se);
-                if($stmt->execute()==true){
-                    $result = $stmt->get_result();
-                    while ($row = $result->fetch_assoc()) { 
-                        array_push($items, $row); 
+                $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+                $items = []; //create return matrix
+                $search = $_GET['query']; //get query
+                $sql = "SELECT cim FROM 'tetelcimek' WHERE id = ? OR cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
+                $stmt = $conn ->prepare($sql); //prepare query
+                $se = "%".$search."%"; //change vars to actually work the way they're supposed to
+                $id = intval($search); // -||-
+                $stmt->bind_param("isss", $id,$se,$se,$se); //bind variables
+                if($stmt->execute()==true){ //if it doesn't die
+                    $result = $stmt->get_result(); //get the stuff
+                    while ($row = $result->fetch_assoc()) {  
+                        array_push($items, $row); //cram the stuff into the matrix
                     }
                 }
-                $conn->close();
+                $conn->close(); //the end
             }
             ?>
             <h2>Történelem</h2>
             <ul>
-                <li>aha</li>
+                <li><a href="tetel.php?tetelid=1">aha</a></li>
                 <li>aha</li>
                 <li>aha</li>
                 <li>aha</li>

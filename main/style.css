@@ -155,3 +155,8 @@ a, a:hover, a:active, a:visited{
         width: 100%;
     }
 }
+
+/* TETEL DETAILS OLDAL */
+.tetelpage h1{
+    color: black;
+}
