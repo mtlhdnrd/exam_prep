@@ -27,7 +27,7 @@ h2, h3{
 }
 
 header{
-    background-image: url(./img/header.jpg);
+    background-image: url(../img/header.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -82,6 +82,7 @@ header{
 .search-container {
     flex-grow: 1;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     margin-top: 30px;
 }
@@ -92,6 +93,9 @@ header{
     padding: 10px;
     border: 1px solid #ccc;
     box-sizing: border-box;
+}
+.search-container button{
+    flex-grow: 1;
 }
 
 main{
@@ -150,4 +154,9 @@ a, a:hover, a:active, a:visited{
     li{
         width: 100%;
     }
+}
+
+/* TETEL DETAILS OLDAL */
+.tetelpage h1{
+    color: black;
 }
