@@ -1,7 +1,7 @@
 <?php
 $tetelid = $_GET["tetelid"]; 
 $conn = new mysqli("localhost","root","", "tetelek"); //create conn
-$sql = "SELECT * FROM tetelcimek WHERE id=?";
+$sql = "SELECT * FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn ->prepare($sql); //prepare query
 $stmt->bind_param("i",$tetelid);
 if($stmt->execute()==true){
@@ -17,14 +17,19 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Szóbeli tételek</title>
 </head>
 <body class="tetelpage">
     <header>
-        head shit goes here pls
-    </header>    
+        <a href="index.php"><h1>Tételek</h1></a>
+        <nav class="navbar">
+            <div style="visibility: hidden;" class="nav-item item1"><a href="#tortdiv">Történelem</a></div> <!-- just here so header stays large, yes im lazy -->
+            <div style="visibility: hidden;" class="nav-item item2"><a href="#iroddiv">Irodalom</a></div>   <!-- just here so header stays large, yes im lazy -->
+            <div style="visibility: hidden;" class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>  <!-- just here so header stays large, yes im lazy -->
+        </nav>
+    </header>
     <main>
     <?php if($data): ?>
         <h1><?php echo $data['id'].". Tétel: ".$data["cim"];?></h1>

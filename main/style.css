@@ -117,7 +117,9 @@ footer{
     margin-top: 30px;
     padding: 20px;
 }
-
+.listing li>*{
+    text-align: center;
+}
 ul{
     display: flex;
     flex-direction: row;
@@ -128,11 +130,25 @@ ul{
 li{
     width: 280px;   /*fix later*/
     color: rgb(113, 152, 224);
+    display: flex;
+    flex-direction: row;
 }
 
 a, a:hover, a:active, a:visited{
-    color: white;
+    color: white; 
+    /* WHY DID YOU MAKE LINKS WHITE ON A WHITE BACKGROUND I WAS SO CONFUSED I THOUGHT IT WAS GONE */
     text-decoration: none;
+}
+li>a, li>a:hover, li>a:active, li>a:visited{
+    color: rgb(76, 138, 255);
+    flex-grow: 1;
+    text-decoration: none;
+}
+.editbutton, .editbutton:hover, .editbutton:active, .editbutton:visited{
+    flex-grow: 0;
+    box-sizing: border-box;
+    border: 2px rgb(76, 138, 255) solid;
+    padding: 5px 15px;
 }
 
 @media (max-width: 768px) {
@@ -157,6 +173,41 @@ a, a:hover, a:active, a:visited{
 }
 
 /* TETEL DETAILS OLDAL */
-.tetelpage h1{
+.tetelpage main h1{
     color: black;
+}
+
+/* TETEL EDIT OLDAL */
+.editform{
+width: 70%;
+margin: auto;
+height: 100%;
+}
+.editform h3{
+    text-align: center;
+}
+.editform .items{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+}
+.editform p{
+    flex-grow: 2;
+    text-align: right;
+    max-width: 50%;
+}
+.editform label, .editform input, .editform textarea, .editform select{
+    flex-grow: 1;
+}
+#tantargynew{
+    width: 100%;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+.editform label{
+    text-align: right;
+}
+.editform textarea{
+ resize: vertical;   
 }
