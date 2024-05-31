@@ -214,3 +214,42 @@ height: 100%;
     }
 }
 
+
+
+@media (max-width: 768px) {
+
+    .nav-item {
+        margin: 5px 0;
+    }
+
+    .search-container {
+        margin-top: 10px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .listing{
+        justify-content: center;
+    }
+
+    li{
+        width: 100%;
+    }
+    .nav-item{
+        margin-bottom: 0;
+    }
+}
+
+
+/* TETEL ADD OLDAL */
+.addform{
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+.addform textarea{
+    width: 50%;
+    min-width: 400px;
+    height: 30vh;
+    min-height: 100px;
+}
