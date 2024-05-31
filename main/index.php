@@ -37,7 +37,7 @@ if(!empty($_GET['query'])){
     </header>
     <main>
         <!-- EDIT SUCCESS POPUP -->
-            <?php if(!empty($_GET['editsuccess'])): ?>
+            <?php if(!empty($_GET['editsuccess'])||!empty($_GET['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                     <div class="toast-header">
                         <strong class="mr-auto">SUCCESS</strong>
@@ -46,7 +46,11 @@ if(!empty($_GET['query'])){
                         </button>
                     </div>
                     <div class="toast-body">
-                        Sikeres változtatás!
+                        <?php if($_GET['addsuccess']): ?>
+                            Sikeres hozzáadás!
+                        <?php elseif($_GET['editsuccess']): ?>
+                            Sikeres változtatás!
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endif;?>
