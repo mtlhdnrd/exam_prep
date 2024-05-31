@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     scrollbar-width: none; /* Remove scrollbar for Firefox */
+    color: black;
 }
 
 /* Hide scrollbar for webkit browsers (Chrome, Safari) */
@@ -94,9 +95,6 @@ header{
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-.search-container button{
-    flex-grow: 1;
-}
 
 main{
     padding: 30px;
@@ -151,27 +149,6 @@ li>a, li>a:hover, li>a:active, li>a:visited{
     padding: 5px 15px;
 }
 
-@media (max-width: 768px) {
-
-    .nav-item {
-        margin: 5px 0;
-    }
-
-    .search-container {
-        margin-top: 10px;
-        width: 100%;
-        padding: 0 10px;
-    }
-
-    .listing{
-        justify-content: center;
-    }
-
-    li{
-        width: 100%;
-    }
-}
-
 /* TETEL DETAILS OLDAL */
 .tetelpage main h1{
     color: black;
@@ -211,3 +188,29 @@ height: 100%;
 .editform textarea{
  resize: vertical;   
 }
+
+
+@media (max-width: 768px) {
+
+    .nav-item {
+        margin: 5px 0;
+    }
+
+    .search-container {
+        margin-top: 10px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .listing{
+        justify-content: center;
+    }
+
+    li{
+        width: 100%;
+    }
+    .nav-item{
+        margin-bottom: 0;
+    }
+}
+
