@@ -1,10 +1,6 @@
 <?php
 session_start();
 $ERROR = 0;
-// Check connection
-/* if ($conn->connect_error) {
-    die("Csatlakozás sikertelen: " . $conn->connect_error);
-} */
 /* check for form stage */
 $continue = $_POST['continue'] ?? 0;
 /* stage 1 return --> check for input errors */
@@ -32,6 +28,10 @@ switch ($continue) {
     case '2':
         /* NO ERRORS --> PROCEED WITH UPLOAD */
         $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+        // Check connection
+        if ($conn->connect_error) {
+            die("Csatlakozás sikertelen: " . $conn->connect_error);
+        }
         $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
         $stmt = $conn->prepare($sql);
         $title = $_SESSION['title'];
@@ -41,8 +41,11 @@ switch ($continue) {
         $classid = $_SESSION['class'];
         $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
         if($stmt->execute()==true){
-            session_destroy();
-            header("Location: index.php?addsuccess=true");
+            session_unset();
+            $_SESSION['addsuccess'] = true;
+            session_write_close();
+            header("Location: index.php");
+            exit();
         }else{
             $ERROR = 5;
         }

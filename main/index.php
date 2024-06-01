@@ -1,7 +1,12 @@
 <?php
+session_start();
 //IF SEARCH
 if(!empty($_GET['query'])){
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+    // Check connection
+    if ($conn->connect_error) {
+        die("Csatlakozás sikertelen: " . $conn->connect_error);
+    }
     $items = []; //create return matrix
     $search = $_GET['query']; //get query
     $sql = "SELECT cim FROM tetelcimek WHERE cim LIKE'?' OR vazlat LIKE'?' OR kidolgozas LIKE'?';"; //write query
@@ -19,6 +24,10 @@ if(!empty($_GET['query'])){
     //IF NOT SEARCH
 }else{
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+    // Check connection
+    if ($conn->connect_error) {
+        die("Csatlakozás sikertelen: " . $conn->connect_error);
+    }
     $sql = "SELECT id, cim, tantargyid FROM tetelcimek;";
     $items = [];
     if($conn->query($sql)==true){
@@ -70,7 +79,7 @@ if(!empty($_GET['query'])){
     </header>
     <main>
         <!-- EDIT SUCCESS POPUP -->
-            <?php if(!empty($_GET['editsuccess'])||!empty($_GET['addsuccess'])): ?>
+            <?php if(isset($_SESSION['editsuccess']) ||isset($_SESSION['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                     <div class="toast-header">
                         <strong class="mr-auto">SUCCESS</strong>
@@ -79,10 +88,12 @@ if(!empty($_GET['query'])){
                         </button>
                     </div>
                     <div class="toast-body">
-                        <?php if(!empty($_GET['editsuccess'])): ?>
+                        <?php if(!empty($_SESSION['editsuccess'])): ?>
                             Sikeres változtatás!
-                        <?php elseif(!empty($_GET['addsuccess'])): ?>
+                            <?php unset($_SESSION['editsuccess']);?>
+                        <?php elseif(!empty($_SESSION['addsuccess'])): ?>
                             Sikeres hozzáadás!
+                            <?php unset($_SESSION['addsuccess']);?>
                         <?php endif; ?>
                     </div>
                 </div>

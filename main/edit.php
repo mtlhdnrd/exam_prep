@@ -1,5 +1,10 @@
 <?php
+session_start();
 $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+// Check connection
+if ($conn->connect_error) {
+    die("Csatlakozás sikertelen: " . $conn->connect_error);
+}
 $tetelid = $_GET['tetelid'];
 $ERROR = null;
 $sql = "SELECT * FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
@@ -22,7 +27,9 @@ if(!empty($_GET['edittag'])){
     $stmt->bind_param("ssssii", $cim, $vazlat, $kidolg, $currentdate, $tanid, $tetelid);
     if($stmt->execute()==true){
         $conn->close();
-        header('Location: index.php?editsuccess=true'); /* EDIT SUCCESS, RETURN TO INDEX WITH SUCCESS VAR */
+        $_SESSION['editsuccess'] = true;
+        session_write_close();
+        header('Location: index.php'); /* EDIT SUCCESS, RETURN TO INDEX WITH SUCCESS VAR */
     }
     else{
         $ERROR = 2;
