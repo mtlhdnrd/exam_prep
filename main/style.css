@@ -173,6 +173,8 @@ height: 100%;
     flex-grow: 2;
     text-align: right;
     max-width: 50%;
+    word-wrap:break-word;
+    hyphens: auto;
 }
 .editform label, .editform input, .editform textarea, .editform select{
     flex-grow: 1;
