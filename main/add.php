@@ -30,25 +30,20 @@ switch ($continue) {
         }
         break;
     case '2':
-        if(empty($_POST['kidolg'])){
-            $continue = 1;
-            $ERROR = 4;
+        /* NO ERRORS --> PROCEED WITH UPLOAD */
+        $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+        $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
+        $stmt = $conn->prepare($sql);
+        $title = $_SESSION['title'];
+        $sketch = $_SESSION['sketch'];
+        $kidolg = $_POST['kidolg'];
+        $date = date("Y-M-D");
+        $classid = $_SESSION['class'];
+        $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
+        if($stmt->execute()==true){
+            header("Location: index.php?addsuccess=true");
         }else{
-            /* NO ERRORS --> PROCEED WITH UPLOAD */
-            $conn = new mysqli("localhost","root","", "tetelek"); //create conn
-            $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
-            $stmt = $conn->prepare($sql);
-            $title = $_SESSION['title'];
-            $sketch = $_SESSION['sketch'];
-            $kidolg = $_POST['kidolg'];
-            $date = date("Y-M-D");
-            $classid = $_SESSION['class'];
-            $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
-            if($stmt->execute()==true){
-                header("Location: index.php?addsuccess=true");
-            }else{
-                $ERROR = 5;
-            }
+            $ERROR = 5;
         }
         break;
     default:
@@ -113,11 +108,7 @@ switch ($continue) {
                     <option value="3">Nyelvtan</option>
                 </select><br><br>
                 <p style="line-height: 0;">Vázlat:</p>
-                <textarea name="sketch" id="sketch">
-                    <?php if(!empty($_POST['sketch'])){
-                        echo $_POST['sketch'];
-                    } ?>
-                </textarea>
+                <textarea name="sketch" id="sketch"><?php if(!empty($_POST['sketch'])):echo $_POST['sketch'];endif;?></textarea>
                 <input type="hidden" name="continue" value="1"><br>
                 <button type="submit">Tovább</button>
             </form>

@@ -1,7 +1,7 @@
 <?php
 $tetelid = $_GET["tetelid"]; 
 $conn = new mysqli("localhost","root","", "tetelek"); //create conn
-$sql = "SELECT * FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
+$sql = "SELECT tetelcimek.id, cim, vazlat, kidolgozas, tantargy FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn ->prepare($sql); //prepare query
 $stmt->bind_param("i",$tetelid);
 if($stmt->execute()==true){

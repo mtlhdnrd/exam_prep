@@ -1,13 +1,14 @@
 <?php
+//IF SEARCH
 if(!empty($_GET['query'])){
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
     $items = []; //create return matrix
     $search = $_GET['query']; //get query
-    $sql = "SELECT cim FROM 'tetelcimek' WHERE id = ? OR cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
+    $sql = "SELECT cim FROM tetelcimek WHERE cim LIKE'?' OR vazlat LIKE'?' OR kidolgozas LIKE'?';"; //write query
     $stmt = $conn ->prepare($sql); //prepare query
-    $se = "%".$search."%"; //change vars to actually work the way they're supposed to
     $id = intval($search); // -||-
-    $stmt->bind_param("isss", $id,$se,$se,$se); //bind variables
+    $se = '%'.$search.'%';
+    $stmt->bind_param("sss",$se, $se, $se); //bind variables --- TBD: WHY THE FUCK DO YOU HAVE A PROBLEM I DON'T UNDERSTAND "The number of variables must match the number of parameters in the prepared statement" BITCH
     if($stmt->execute()==true){ //if it doesn't die
         $result = $stmt->get_result(); //get the stuff
         while ($row = $result->fetch_assoc()) {  
@@ -15,6 +16,38 @@ if(!empty($_GET['query'])){
         }
     }
     $conn->close(); //the end
+    //IF NOT SEARCH
+}else{
+    $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+    $sql = "SELECT id, cim, tantargyid FROM tetelcimek;";
+    $items = [];
+    if($conn->query($sql)==true){
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $items[] = $row; // Add each row as an associative array to the $items array
+            }
+        }
+    }
+    $conn->close();
+    $items_h = [];
+    $items_l = [];
+    $items_g = [];
+    foreach ($items as $var) {
+        switch ($var['tantargyid']) {
+            case '1':
+                array_push($items_h, $var);
+                break;
+            case '2':
+                array_push($items_l, $var);
+                break;
+            case '3':
+                array_push($items_g, $var);
+                break;
+            default:
+                break;
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -37,7 +70,7 @@ if(!empty($_GET['query'])){
     </header>
     <main>
         <!-- EDIT SUCCESS POPUP -->
-            <?php if(!empty($_GET['editsuccess'])): ?>
+            <?php if(!empty($_GET['editsuccess'])||!empty($_GET['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                     <div class="toast-header">
                         <strong class="mr-auto">SUCCESS</strong>
@@ -46,7 +79,11 @@ if(!empty($_GET['query'])){
                         </button>
                     </div>
                     <div class="toast-body">
-                        Sikeres változtatás!
+                        <?php if(!empty($_GET['editsuccess'])): ?>
+                            Sikeres változtatás!
+                        <?php elseif(!empty($_GET['addsuccess'])): ?>
+                            Sikeres hozzáadás!
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endif;?>
@@ -58,26 +95,25 @@ if(!empty($_GET['query'])){
         <div class="listing" id="tortdiv">
             <h2>Történelem</h2>
             <ul>
-                <li><a href="tetel.php?tetelid=1">aha</a><a class="editbutton" href="edit.php?tetelid=1">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=2">aha</a><a class="editbutton" href="edit.php?tetelid=2">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=3">aha</a><a class="editbutton" href="edit.php?tetelid=3">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=4">aha</a><a class="editbutton" href="edit.php?tetelid=4">módosítás</a></li>
+                <?php foreach($items_h as $tetel): ?>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class="listing" id="iroddiv">
             <h2>Irodalom</h2>
             <ul>
-                <li>aha</li>
-                <li>aha</li>
-                <li>aha</li>
+            <?php foreach($items_l as $tetel): ?>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class="listing" id="nyelvdiv">
             <h2>Nyelvtan</h2>
             <ul>
-                <li>aha</li>
-                <li>aha</li>
-                <li>aha</li>
+            <?php foreach($items_g as $tetel): ?>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </main>
