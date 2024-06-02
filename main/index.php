@@ -89,9 +89,9 @@ foreach ($items as $var) {
     <header>
         <a href="index.php"><h1>Tételek</h1></a>
         <nav class="navbar">
-            <div class="nav-item item1"><a href="#tortdiv">Történelem</a></div>
-            <div class="nav-item item2"><a href="#iroddiv">Irodalom</a></div>
-            <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
+            <a href="#tortdiv"><div class="nav-item item1">Történelem</div></a>
+            <a href="#iroddiv"><div class="nav-item item2">Irodalom</div></a>
+            <a href="#nyelvdiv"><div class="nav-item item3">Nyelvtan</div></a>
         </nav>
     </header>
     <main class="home">
