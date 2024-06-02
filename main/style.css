@@ -1,13 +1,15 @@
 body {
     font-family: Arial, sans-serif;
-    scrollbar-width: none; /* Remove scrollbar for Firefox */
     color: black;
 }
 
-/* Hide scrollbar for webkit browsers (Chrome, Safari) */
-::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar width */
-    height: 0; /* Remove scrollbar height */
+html {
+    scrollbar-width: none;
+  }
+
+/* görgetés elrejtése webkit alapú böngészőkben (Chrome, Safari) */
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .home p{
@@ -45,23 +47,6 @@ header{
     background-position: center;
 }
 
-
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: blue;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.button:hover {
-    background-color: darkblue;
-}
-
 .navbar {
     display: flex;
     justify-content: flex-start; /*change to center at mobile mode*/
@@ -77,15 +62,15 @@ header{
     color: white;
 }
 
-.item1 {
+#item1 {
     background-color: #c3b3ec; /* Red */
 }
 
-.item2 {
+#item2 {
     background-color: #d3aeaa; /* Purple */
 }
 
-.item3 {
+#item3 {
     background-color: #cde0b0; /* Green */
 }
 
@@ -119,7 +104,7 @@ main{
 
 footer{
     background-color: rgb(34, 34, 73);
-    height: 250px;
+    height: 500px;
 }
 
 .listing{
@@ -137,6 +122,7 @@ ul{
     flex-direction: row;
     flex-wrap: wrap;
     list-style-type: dot;
+    padding: 0;
 }
 
 .list-items{
@@ -149,28 +135,81 @@ ul{
 }
 
 li{
-    width: 280px;   /*fix later*/
+    min-width: 350px; /*fix later*/
+    width: 25%;
     color: rgb(113, 152, 224);
     display: flex;
+    margin-bottom: 15px;
     flex-direction: row;
 }
 
 a, a:hover, a:active, a:visited{
-    color: black;
+    color: white;
     /* WHY DID YOU MAKE LINKS WHITE ON A WHITE BACKGROUND I WAS SO CONFUSED I THOUGHT IT WAS GONE */
     /*FYM I DID NOT DO THAT*/
     text-decoration: none;
 }
 li>a, li>a:hover, li>a:active, li>a:visited{
-    color: rgb(76, 138, 255);
+    color: black;
     flex-grow: 1;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
 }
-.editbutton, .editbutton:hover, .editbutton:active, .editbutton:visited{
+
+a>p{
+    margin-bottom: 0%;
+    align-self: center;
+}
+
+.portrait {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.portrait_div {
+    width: auto;
+    height: 70%;
+    aspect-ratio: 3 / 4;
+}
+
+.portrait_img {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+}
+
+#devs{
+    height: 10%;
+    padding-top: 50px;
+}
+
+#devs h2{
+    color: white;
+}
+
+figcaption{
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.button, .button:hover, .button:active, .button:visited{
     flex-grow: 0;
     box-sizing: border-box;
-    border: 2px rgb(76, 138, 255) solid;
+    border: 2px rgb(102, 102, 105) solid;
     padding: 5px 15px;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: rgb(101, 101, 160);
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
 /* TETEL DETAILS OLDAL */
@@ -232,37 +271,29 @@ height: 100%;
         justify-content: center;
     }
 
-    li{
-        width: 100%;
-    }
     .nav-item{
         margin-bottom: 0;
     }
-}
 
-
-
-@media (max-width: 768px) {
-
-    .nav-item {
-        margin: 5px 0;
+    footer{
+        height: fit-content
     }
 
-    .search-container {
-        margin-top: 10px;
-        width: 100%;
-        padding: 0 10px;
+    .portrait {
+        flex-direction: column;
+        height: 100% ;
+        display: flex;
+        justify-content: space-evenly;
     }
 
-    .listing{
-        justify-content: center;
+    .portrait_div {
+        margin-top: 30px;
+        height: 300px;
+        width: 225px;
     }
 
-    li{
-        width: 100%;
-    }
-    .nav-item{
-        margin-bottom: 0;
+    .portrait_div:last-child {
+        margin-bottom: 30px;
     }
 }
 

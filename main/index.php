@@ -78,12 +78,12 @@ if(!empty($_GET['query'])){
     <header>
         <a href="index.php"><h1>Tételek</h1></a>
         <nav class="navbar">
-            <div class="nav-item item1"><a href="#tortdiv">Történelem</a></div>
-            <div class="nav-item item2"><a href="#iroddiv">Irodalom</a></div>
-            <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
+            <div class="nav-item" id="item1"><a href="#tortdiv">Történelem</a></div>
+            <div class="nav-item" id="item2"><a href="#iroddiv">Irodalom</a></div>
+            <div class="nav-item" id="item3"><a href="#nyelvdiv">Nyelvtan</a></div>
         </nav>
     </header>
-    <main class="home">
+    <main>
         <!-- EDIT SUCCESS POPUP -->
             <?php if(isset($_SESSION['editsuccess']) ||isset($_SESSION['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
@@ -104,17 +104,17 @@ if(!empty($_GET['query'])){
                     </div>
                 </div>
             <?php endif;?>
-        <a href="add.php" class="button">Új tétel felvétele...</a>
+        <a href="add.php" class="add button">Új tétel felvétele...</a>
         <form class="search-container" method="get">
             <input type="text" placeholder="Search..." name="query">
-            <button type="submit">Search</button>
+            <button class="button search" type="submit">Search</button>
         </form>
         <?php if(!empty($items)): ?>
         <div class="listing" id="tortdiv">
             <h2>Történelem</h2>
             <ul>
                 <?php foreach($items_h as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="button edit" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -122,7 +122,7 @@ if(!empty($_GET['query'])){
             <h2>Irodalom</h2>
             <ul>
             <?php foreach($items_l as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="button edit" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -130,7 +130,7 @@ if(!empty($_GET['query'])){
             <h2>Nyelvtan</h2>
             <ul>
             <?php foreach($items_g as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="button edit" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -141,7 +141,23 @@ if(!empty($_GET['query'])){
         <?php endif;?>
     </main>
     <footer>
-        Fejlesztők:
+        <div id="devs" class="portrait">     
+        <h2>Készítette</h2>
+        </div>  
+        <div class="portrait">
+        <div class="portrait_div">
+            <img class="portrait_img" src="../img/tokodi.png">
+            <figcaption>Tokodi Mihály</figcaption>
+        </div>
+        <div class="portrait_div">
+            <img class="portrait_img" src="../img/bako.png">
+            <figcaption>Bakó Borka</figcaption>
+        </div>
+        <div class="portrait_div">
+            <img class="portrait_img" src="../img/katona.png">
+            <figcaption>Katona Bálint</figcaption>
+        </div>
+        </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
