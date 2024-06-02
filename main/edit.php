@@ -88,13 +88,13 @@ $conn->close();
                 <div class="items">
                     <label for="vazlatnew"><h3>Vázlat: </h3></label>
                     <br>
-                    <textarea name="vazlatnew" id="vazlatnew"><?php echo nl2br(htmlspecialchars($data['vazlat']));?></textarea>
+                    <textarea name="vazlatnew" id="vazlatnew"><?php echo htmlspecialchars($data['vazlat']);?></textarea>
                 </div>
                 <h3></h3>
                 <div class="items">
                     <label for="kidolgnew"><h3>Kidolgozás: </h3></label>
                     <br>
-                    <textarea name="kidolgnew" id="kidolgnew"><?php echo nl2br(htmlspecialchars($data['kidolgozas']));?></textarea>
+                    <textarea name="kidolgnew" id="kidolgnew"><?php echo htmlspecialchars($data['kidolgozas']);?></textarea>
                 </div>
                 <input type="hidden" name="edittag" value="1">
                 <input type="hidden" name="tetelid" value="<?php echo $tetelid;?>">
