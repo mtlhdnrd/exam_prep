@@ -66,16 +66,12 @@ switch ($continue) {
         <link rel="stylesheet" href="style.css">
         <title>Szóbeli tételek</title>
     </head>
-    <body>
-        <header>
+    <body class="tetelpage">
+        <header class="full_head">
             <a href="index.php"><h1>Tételek</h1></a>
-            <nav class="navbar">
-                <div class="nav-item item1"><a href="#tortdiv">Történelem</a></div>
-                <div class="nav-item item2"><a href="#iroddiv">Irodalom</a></div>
-                <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
-            </nav>
         </header>
-    <main>
+    <main class="tetel_main">
+        <div class="listing">
         <?php if($ERROR): ?>
             <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                 <div class="toast-header">
@@ -101,11 +97,13 @@ switch ($continue) {
         <?php endif;?>
         <?php if ($continue==0):?>
             <!-- goofy ahh font  -->
-            <h2>Tétel hozzáadása</h2> 
-            <form class="addform" method="post">
-                <label for="title">Tétel címe: </label>
+            <h1>Tétel hozzáadása</h1> 
+            <form class="form" method="post">
+                <label for="title"><h3>Tétel címe: </h3></label>
+                <br>
                 <input type="text" name="title" id="title" <?php if(!empty($_POST['title'])): echo 'value="'.$_POST['title'].'"'; elseif(!empty($_SESSION['title'])): echo 'value="'.$_SESSION['title'].'"'; endif;?>><br><br>
-                <label for="class">Tantárgy</label>
+                <label for="class"><h3>Tantárgy</h3></label>
+                <br>
                 <select name="class" id="class">
                     <option value="0">Kérem válasszon egy tantárgyat</option>
                     <option value="1">Történelem</option>
@@ -114,8 +112,8 @@ switch ($continue) {
                 </select><br><br>
                 <p style="line-height: 0;">Vázlat:</p>
                 <textarea name="sketch" id="sketch"><?php if(!empty($_POST['sketch'])):echo $_POST['sketch']; elseif(!empty($_SESSION['sketch'])): echo $_SESSION['sketch']; endif;?></textarea>
-                <input type="hidden" name="continue" value="1"><br>
-                <button type="submit">Tovább</button>
+                <input type="hidden" name="continue" value="1"><br><br>
+                <button type="submit" class="button">Tovább</button>
             </form>
         <?php elseif($continue==1): ?>
             <h2>Kidolgozás hozzáadása</h2>
@@ -126,6 +124,7 @@ switch ($continue) {
                 <button type="submit">Feltöltés</button>
             </form>
         <?php endif;?>
+        </div>
     </main>
     
 </body>

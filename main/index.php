@@ -89,9 +89,9 @@ foreach ($items as $var) {
     <header>
         <a href="index.php"><h1>Tételek</h1></a>
         <nav class="navbar">
-            <a href="#tortdiv"><div class="nav-item item1">Történelem</div></a>
-            <a href="#iroddiv"><div class="nav-item item2">Irodalom</div></a>
-            <a href="#nyelvdiv"><div class="nav-item item3">Nyelvtan</div></a>
+            <a href="#tortdiv"><div class="nav-item" id="item1">Történelem</div></a>
+            <a href="#iroddiv"><div class="nav-item" id="item2">Irodalom</div></a>
+            <a href="#nyelvdiv"><div class="nav-item" id="item3">Nyelvtan</div></a>
         </nav>
     </header>
     <main>
@@ -125,7 +125,7 @@ foreach ($items as $var) {
             <ul>
                 <?php if(!empty($items_h)): ?>
                     <?php foreach($items_h as $tetel): ?>
-                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="edit button" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                     <?php endforeach; ?>
                 <?php elseif(isset($_GET['query'])):?>
                     <p>Nincs a keresésnek megfelelő történelem tétel</p>
@@ -139,7 +139,7 @@ foreach ($items as $var) {
             <ul>
                 <?php if(!empty($items_l)): ?>
                     <?php foreach($items_l as $tetel): ?>
-                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="edit button" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                     <?php endforeach; ?>
                 <?php elseif(isset($_GET['query'])):?>
                     <p>Nincs a keresésnek megfelelő irodalom tétel</p>
@@ -153,7 +153,7 @@ foreach ($items as $var) {
             <ul>
                 <?php if(!empty($items_g)): ?>
                     <?php foreach($items_g as $tetel): ?>
-                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><p><?=$tetel['cim'] ?></p></a> <a class="edit button" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
                     <?php endforeach; ?>
 
                 <?php elseif(isset($_GET['query'])):?>

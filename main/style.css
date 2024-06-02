@@ -12,11 +12,6 @@ body::-webkit-scrollbar {
     display: none;
 }
 
-.home p{
-    margin-bottom: 0%;
-    margin-right: 25%;
-}
-
 .tetelitems{
     color: black;
     display: flex;
@@ -45,6 +40,8 @@ header{
     background-image: url(../img/header.jpg);
     background-size: cover;
     background-position: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
@@ -212,48 +209,59 @@ figcaption{
     transition: background-color 0.3s;
 }
 
-/* TETEL DETAILS OLDAL */
+.full_head{
+    align-items: center;
+    flex-direction: row;
+}
+
+.tetel_main{
+    width: 100%;
+}
+
+
+.tetelpage main{
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
 .tetelpage main h1{
     color: black;
 }
 
-/* TETEL EDIT OLDAL */
-.editform{
-width: 70%;
-margin: auto;
-height: 100%;
+.tetelpage h2{
+    color: black;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
 }
-.editform h3{
-    text-align: center;
+
+.tetelpage p{
+    font-size: 25px;
+    font-style: italic;
 }
-.editform .items{
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
+
+.tetelpage div{
+    padding: px 100px;
+    width: auto;
 }
-.editform p{
-    flex-grow: 2;
-    text-align: right;
-    max-width: 50%;
-    word-wrap:break-word;
-    hyphens: auto;
-}
-.editform label, .editform input, .editform textarea, .editform select{
-    flex-grow: 1;
-}
+
 #tantargynew{
     width: 100%;
     flex-grow: 1;
     box-sizing: border-box;
 }
-.editform label{
-    text-align: right;
-}
-.editform textarea{
- resize: vertical;   
-}
 
+/* TETEL ADD OLDAL */
+.form{
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+.form textarea{
+    width: 50%;
+    min-width: 400px;
+    height: 30vh;
+    min-height: 100px;
+}
 
 @media (max-width: 768px) {
 
@@ -295,18 +303,4 @@ height: 100%;
     .portrait_div:last-child {
         margin-bottom: 30px;
     }
-}
-
-
-/* TETEL ADD OLDAL */
-.addform{
-    width: 70%;
-    margin: auto;
-    text-align: center;
-}
-.addform textarea{
-    width: 50%;
-    min-width: 400px;
-    height: 30vh;
-    min-height: 100px;
 }

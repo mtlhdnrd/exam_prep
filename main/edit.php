@@ -48,23 +48,21 @@ $conn->close();
     <title>Szóbeli tételek</title>
 </head>
 <body class="tetelpage">
-    <header>
+    <header class="full_head">
         <a href="index.php"><h1>Tételek</h1></a>
-        <nav class="navbar">
-            <div style="visibility: hidden;" class="nav-item item1"><a href="#tortdiv">Történelem</a></div> <!-- just here as padding so header stays large, yes im lazy -->
-            <div style="visibility: hidden;" class="nav-item item2"><a href="#iroddiv">Irodalom</a></div>   <!-- just here as padding so header stays large, yes im lazy -->
-            <div style="visibility: hidden;" class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>  <!-- just here as padding so header stays large, yes im lazy -->
-        </nav>
     </header>
-    <main style="width: 100vw;">
+    <main class="tetel_main">
+    <div class="listing">
         <?php if ($data):?>
-            <form class="editform" method="get">
+            <form class="form" method="get">
                 <div class="items">
-                    <label for="cimnew">Cím: </label>
+                    <label for="cimnew"><h3>Cím: </h3></label>
+                    <br>
                     <input type="text" name="cimnew" id="cimnew" value="<?php echo $data['cim'];?>">
                 </div>
                 <div class="items">
-                    <label for="tantargynew">Tantárgy: </label>
+                    <label for="tantargynew"><h3>Tantárgy: </h3></label>
+                    <br>
                     <select name="tantargynew" id="tantargynaw">
                         <?php 
                         switch($data['tantargyid']){
@@ -88,21 +86,24 @@ $conn->close();
                     </select>
                 </div>
                 <div class="items">
-                    <label for="vazlatnew">Vázlat: </label>
+                    <label for="vazlatnew"><h3>Vázlat: </h3></label>
+                    <br>
                     <textarea name="vazlatnew" id="vazlatnew"><?php echo nl2br(htmlspecialchars($data['vazlat']));?></textarea>
                 </div>
                 <h3></h3>
                 <div class="items">
-                    <label for="kidolgnew">Kidolgozás: </label>
+                    <label for="kidolgnew"><h3>Kidolgozás: </h3></label>
+                    <br>
                     <textarea name="kidolgnew" id="kidolgnew"><?php echo nl2br(htmlspecialchars($data['kidolgozas']));?></textarea>
                 </div>
                 <input type="hidden" name="edittag" value="1">
                 <input type="hidden" name="tetelid" value="<?php echo $tetelid;?>">
-                <button type="submit">Frissítés</button>
+                <button type="submit" class="button">Frissítés</button>
             </form>
         <?php else: ?>
             <h1>shit went really fucking wrong somewhere, good job c:</h1>
         <?php endif ?>
+        </div>
     </main>
     
 </body>
