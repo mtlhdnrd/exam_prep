@@ -9,14 +9,14 @@ if(!empty($_GET['query'])){
     }
     $items = []; //create return matrix
     $search = $_GET['query']; //get query
-    $sql = "SELECT cim FROM tetelcimek WHERE cim LIKE'?' OR vazlat LIKE'?' OR kidolgozas LIKE'?';"; //write query
+    $sql = "SELECT cim FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
     $stmt = $conn ->prepare($sql); //prepare query
     $id = intval($search); // -||-
-    $se = '%'.$search.'%';
+    $se = '"%'.$search.'%"';
     $stmt->bind_param("sss",$se, $se, $se); //bind variables --- TBD: WHY THE FUCK DO YOU HAVE A PROBLEM I DON'T UNDERSTAND "The number of variables must match the number of parameters in the prepared statement" BITCH
     if($stmt->execute()==true){ //if it doesn't die
         $result = $stmt->get_result(); //get the stuff
-        while ($row = $result->fetch_assoc()) {  
+        while ($row = $result->fetch_assoc()) {
             array_push($items, $row); //cram the stuff into the matrix
         }
     }
