@@ -17,10 +17,10 @@ if($stmt->execute()==true){
 }else $data = null;
 /* RELOAD CHECKS */
 if(!empty($_GET['edittag'])){
-    $cim = !empty($_GET['cimnew'])? $_GET['cimnew'] : $data['cim'];
-    $vazlat = !empty($_GET['vazlatnew'])? $_GET['vazlatnew'] : $data['vazlat'];
-    $kidolg = !empty($_GET['kidolgnew'])? $_GET['kidolgnew'] : $data['kidolgozas'];
-    $tanid = ($_GET['tantargynew']) != 0? $_GET['tantargynew'] : $data['tantargyid'];
+    $cim = $_GET['cimnew'];
+    $vazlat = $_GET['vazlatnew'];
+    $kidolg = $_GET['kidolgnew'];
+    $tanid = $_GET['tantargynew'];
     $currentdate = date('Y-m-d');
     $sql = "UPDATE tetelcimek SET cim=?, vazlat =?, kidolgozas=?, modosit=?, tantargyid=? WHERE tetelcimek.id=?;";
     $stmt = $conn->prepare($sql);
@@ -59,40 +59,48 @@ $conn->close();
     <main style="width: 100vw;">
         <?php if ($data):?>
             <form class="editform" method="get">
-                <h3>Cím</h3>
                 <div class="items">
-                    <p>Régi: <?php echo $data['cim'];?></p>
-                    <label for="cimnew">Új: </label>
-                    <input type="text" name="cimnew" id="cimnew">
+                    <label for="cimnew">Cím: </label>
+                    <input type="text" name="cimnew" id="cimnew" value="<?php echo $data['cim'];?>">
                 </div>
-                <h3>Tantárgy</h3>
                 <div class="items">
-                    <p>Régi: <?php echo $data['tantargy'];?></p>
-                    <label for="tantargynew">Új: </label>
+                    <label for="tantargynew">Tantárgy: </label>
                     <select name="tantargynew" id="tantargynaw">
-                        <option value="0">Válassz egy tantárgyat</option>
-                        <option value="1">Történelem</option>
-                        <option value="2">Irodalom</option>
-                        <option value="3">Nyelvtan</option>
+                        <?php 
+                        switch($data['tantargyid']){
+                            case'1':
+                                echo '<option value="1" selected="seleced">Történelem</option>';
+                                echo '<option value="2">Irodalom</option>';
+                                echo '<option value="3">Nyelvtan</option>';
+                                break;
+                            case '2':
+                                echo '<option value="1">Történelem</option>';
+                                echo '<option value="2" selected="seleced">Irodalom</option>';
+                                echo '<option value="3">Nyelvtan</option>';
+                                break;
+                            case '3':
+                                echo '<option value="1">Történelem</option>';
+                                echo '<option value="2">Irodalom</option>';
+                                echo '<option value="3" selected="seleced">Nyelvtan</option>';
+                                break;
+                        }
+                        ?>
                     </select>
                 </div>
-                <h3>Vázlat</h3>
                 <div class="items">
-                    <p>Régi: <br><?php echo nl2br(htmlspecialchars($data['vazlat']));?></p>
-                    <label for="vazlatnew">Új: </label>
-                    <textarea name="vazlatnew" id="vazlatnew"></textarea>
+                    <label for="vazlatnew">Vázlat: </label>
+                    <textarea name="vazlatnew" id="vazlatnew"><?php echo nl2br(htmlspecialchars($data['vazlat']));?></textarea>
                 </div>
-                <h3>Kidolgozás</h3>
+                <h3></h3>
                 <div class="items">
-                    <p>Régi: <br> <?php echo nl2br(htmlspecialchars($data['kidolgozas']));?></p>
-                    <label for="kidolgnew">Új: </label>
-                    <textarea name="kidolgnew" id="kidolgnew"></textarea>
+                    <label for="kidolgnew">Kidolgozás: </label>
+                    <textarea name="kidolgnew" id="kidolgnew"><?php echo nl2br(htmlspecialchars($data['kidolgozas']));?></textarea>
                 </div>
                 <input type="hidden" name="edittag" value="1">
                 <input type="hidden" name="tetelid" value="<?php echo $tetelid;?>">
                 <button type="submit">Frissítés</button>
             </form>
-        <?php else:?>
+        <?php else: ?>
             <h1>shit went really fucking wrong somewhere, good job c:</h1>
         <?php endif ?>
     </main>
