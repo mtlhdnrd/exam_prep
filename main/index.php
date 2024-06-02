@@ -46,7 +46,7 @@ if(!empty($_GET['query'])){
     }
     $sql = "SELECT id, cim, tantargyid FROM tetelcimek;";
     $items = [];
-    if($conn->query($sql)==true){
+    if($conn->query($sql)) {
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
