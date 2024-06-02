@@ -99,7 +99,7 @@ foreach ($items as $var) {
             <?php if(isset($_SESSION['editsuccess']) ||isset($_SESSION['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                     <div class="toast-header">
-                        <strong class="mr-auto">SUCCESS</strong>
+                        <strong class="mr-auto">ALERT</strong>
                         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                             &times;
                         </button>
@@ -111,6 +111,10 @@ foreach ($items as $var) {
                         <?php elseif(!empty($_SESSION['addsuccess'])): ?>
                             Sikeres hozzáadás!
                             <?php unset($_SESSION['addsuccess']);?>
+                        <?php elseif(!empty($_SESSION['editcancel'])): ?>
+                            <script>console.log("did cancel get sent<?php $_SESSION['editcancel']?:"no" ?>")</script>       <!-- DEBBUG -->
+                            Módosítások elvetve!
+                            <?php unset($_SESSION['editcancel']);?>
                         <?php endif; ?>
                     </div>
                 </div>

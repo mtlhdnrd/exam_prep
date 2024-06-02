@@ -16,7 +16,7 @@ if($stmt->execute()==true){
     $stmt->close();
 }else $data = null;
 /* RELOAD CHECKS */
-if(!empty($_GET['edittag'])){
+if(!empty($_GET['update'])){
     $cim = $_GET['cimnew'];
     $vazlat = $_GET['vazlatnew'];
     $kidolg = $_GET['kidolgnew'];
@@ -29,11 +29,15 @@ if(!empty($_GET['edittag'])){
         $conn->close();
         $_SESSION['editsuccess'] = true;
         session_write_close();
-        header('Location: index.php'); /* EDIT SUCCESS, RETURN TO INDEX WITH SUCCESS VAR */
+        header('Location: index.php'); /* EDIT SUCCESS, RETURN TO INDEX */
     }
     else{
         $ERROR = 2;
     }
+}else if(!empty($_GET['cancel'])){
+    $_SESSION['editcancel'] = true;
+    session_write_close();
+    header('Location: index.php'); /* EDIT CANCELLED, RETURN TO INDEX */
 }
 $conn->close();
 ?>
@@ -98,10 +102,11 @@ $conn->close();
                 </div>
                 <input type="hidden" name="edittag" value="1">
                 <input type="hidden" name="tetelid" value="<?php echo $tetelid;?>">
-                <button type="submit" class="button">Frissítés</button>
+                <button type="submit" class="button" name="cancel" value="1">Elvetés</button>
+                <button type="submit" class="button" name="update" value="1">Frissítés</button>
             </form>
         <?php else: ?>
-            <h1>shit went really fucking wrong somewhere, good job c:</h1>
+            <h1>H O W.</h1>
         <?php endif ?>
         </div>
     </main>
