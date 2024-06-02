@@ -83,6 +83,7 @@ if(!empty($_GET['query'])){
             <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
         </nav>
     </header>
+    <main class="home">
         <!-- EDIT SUCCESS POPUP -->
             <?php if(isset($_SESSION['editsuccess']) ||isset($_SESSION['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
