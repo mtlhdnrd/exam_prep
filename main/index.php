@@ -2,29 +2,39 @@
 session_start();
 //IF SEARCH
 if(!empty($_GET['query'])){
-    echo '<script> console.log("search if initiated");</script>';
+    echo '<script> console.log("search if initiated");</script>'; // DEBUG
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
     // Check connection
     if ($conn->connect_error) {
         die("Csatlakozás sikertelen: " . $conn->connect_error);
     }
     $search = $_GET['query']; //get query
-    $sql = "SELECT id, cim, tantargyid FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
-    $stmt = $conn ->prepare($sql); //prepare query
-    $id = intval($search); // -||-
-    $se = '"%'.$search.'%"';
-    $stmt->bind_param("sss",$se, $se, $se);
-    $items = []; //create return matrix
-    if($stmt->execute()==true){ //if it doesn't die
-        $result = $stmt->get_result(); //get the stuff
-        echo '<script> console.log("'.$result->num_rows.'");</script>'; /* DEBUG */
-        if ($result->num_rows>0){
-            echo '<script> console.log("result has rows");</script>'; /* DEBUG */
-            while ($row = $result->fetch_assoc()) {
-                $items[] = $row; //push it to the matrix
+    echo '<script> console.log("search query is: '.$search.'");</script>'; // DEBUG 
+    $sql = "SELECT id, cim, tantargyid FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;";
+    echo '<script> console.log("sql query: '.$sql.'");</script>'; // DEBUG 
+    $stmt = $conn ->prepare($sql);
+    $search_mod = '%'.$search.'%';
+    $stmt->bind_param("sss", $search_mod, $search_mod, $search_mod);
+    $items = [];
+    switch ($stmt->execute()) {
+        case true:
+            echo '<script> console.log("execute successful");</script>'; // DEBUG 
+            $result = $stmt->get_result();
+            if($result->num_rows>0){
+                echo '<script> console.log("'.$result->num_rows.' rows found");</script>'; // DEBUG 
+                while ($row = $result->fetch_assoc()){
+                    $items[] = $row;
+                }
+                    echo '<script> console.log("items array loaded");</script>'; // DEBUG 
+                    echo '<script> console.log("'.$items[0]['id'].' || '.$items[0]['cim'].' || '.$items[0]['tantargyid'].'");</script>'; // DEBUG 
+            }else{
+                echo '<script> console.log("no rows found");</script>'; // DEBUG 
             }
-            echo '<script> console.log("search items pushed");</script>'; /* DEBUG */
-        }
+            break;
+        case false:
+            echo '<script> console.log("execute falied");</script>'; // DEBUG 
+            echo '<script> console.log("Error: '.$stmt->error?:$conn->error.'");</script>'; // DEBUG
+            break;
     }
     $conn->close(); //the end
     //IF NOT SEARCH
@@ -45,23 +55,24 @@ if(!empty($_GET['query'])){
         }
     }
     $conn->close();
-    $items_h = [];
-    $items_l = [];
-    $items_g = [];
-    foreach ($items as $var) {
-        switch ($var['tantargyid']) {
-            case '1':
-                array_push($items_h, $var);
-                break;
-            case '2':
-                array_push($items_l, $var);
-                break;
-            case '3':
-                array_push($items_g, $var);
-                break;
-            default:
-                break;
-        }
+}
+$items_h = [];
+$items_l = [];
+$items_g = [];
+echo '<script> console.log("items[g length: '.count($items).'");</script>'; // DEBUG 
+foreach ($items as $var) {
+    switch ($var['tantargyid']) {
+        case '1':
+            array_push($items_h, $var);
+            break;
+        case '2':
+            array_push($items_l, $var);
+            break;
+        case '3':
+            array_push($items_g, $var);
+            break;
+        default:
+            break;
     }
 }
 ?>
@@ -109,36 +120,49 @@ if(!empty($_GET['query'])){
             <input type="text" placeholder="Search..." name="query">
             <button type="submit">Search</button>
         </form>
-        <?php if(!empty($items)): ?>
         <div class="listing" id="tortdiv">
             <h2>Történelem</h2>
             <ul>
-                <?php foreach($items_h as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
-                <?php endforeach; ?>
+                <?php if(!empty($items_h)): ?>
+                    <?php foreach($items_h as $tetel): ?>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <?php endforeach; ?>
+                <?php elseif(isset($_GET['query'])):?>
+                    <p>Nincs a keresésnek megfelelő történelem tétel</p>
+                <?php else:?>
+                    <p>Nincs történelem tétel az adatbázisban</p>
+                <?php endif;?>
             </ul>
         </div>
         <div class="listing" id="iroddiv">
             <h2>Irodalom</h2>
             <ul>
-            <?php foreach($items_l as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
-                <?php endforeach; ?>
+                <?php if(!empty($items_l)): ?>
+                    <?php foreach($items_l as $tetel): ?>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <?php endforeach; ?>
+                <?php elseif(isset($_GET['query'])):?>
+                    <p>Nincs a keresésnek megfelelő irodalom tétel</p>
+                <?php else:?>
+                    <p>Nincs irodalom tétel az adatbázisban</p>
+                <?php endif;?>
             </ul>
         </div>
         <div class="listing" id="nyelvdiv">
             <h2>Nyelvtan</h2>
             <ul>
-            <?php foreach($items_g as $tetel): ?>
-                    <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
-                <?php endforeach; ?>
+                <?php if(!empty($items_g)): ?>
+                    <?php foreach($items_g as $tetel): ?>
+                        <li><a href="tetel.php?tetelid=<?=$tetel['id']?>"><?=$tetel['cim'] ?></a> <a class="editbutton" href="edit.php?tetelid=<?=$tetel['id']?>">módostás</a> </li>
+                    <?php endforeach; ?>
+
+                <?php elseif(isset($_GET['query'])):?>
+                    <p>Nincs a keresésnek megfelelő nyelvtan tétel</p>
+                <?php else:?>
+                    <p>Nincs nyelvtan tétel az adatbázisban</p>
+                <?php endif;?>
             </ul>
         </div>
-        <?php else: ?>
-            <div class="noresult">
-                <h2>Nincs a keresésnek megfelelő tétel / nincsenek tételek az adatbázisban.</h2>
-            </div>
-        <?php endif;?>
     </main>
     <footer>
         Fejlesztők:
