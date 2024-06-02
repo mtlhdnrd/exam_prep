@@ -1,10 +1,6 @@
 <?php
 session_start();
 $ERROR = 0;
-// Check connection
-/* if ($conn->connect_error) {
-    die("Csatlakozás sikertelen: " . $conn->connect_error);
-} */
 /* check for form stage */
 $continue = $_POST['continue'] ?? 0;
 /* stage 1 return --> check for input errors */
@@ -30,25 +26,28 @@ switch ($continue) {
         }
         break;
     case '2':
-        if(empty($_POST['kidolg'])){
-            $continue = 1;
-            $ERROR = 4;
+        /* NO ERRORS --> PROCEED WITH UPLOAD */
+        $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+        // Check connection
+        if ($conn->connect_error) {
+            die("Csatlakozás sikertelen: " . $conn->connect_error);
+        }
+        $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
+        $stmt = $conn->prepare($sql);
+        $title = $_SESSION['title'];
+        $sketch = $_SESSION['sketch'];
+        $kidolg = $_POST['kidolg'];
+        $date = date("Y-m-d");
+        $classid = $_SESSION['class'];
+        $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
+        if($stmt->execute()==true){
+            session_unset();
+            $_SESSION['addsuccess'] = true;
+            session_write_close();
+            header("Location: index.php");
+            exit();
         }else{
-            /* NO ERRORS --> PROCEED WITH UPLOAD */
-            $conn = new mysqli("localhost","root","", "tetelek"); //create conn
-            $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
-            $stmt = $conn->prepare($sql);
-            $title = $_SESSION['title'];
-            $sketch = $_SESSION['sketch'];
-            $kidolg = $_POST['kidolg'];
-            $date = date("Y-M-D");
-            $classid = $_SESSION['class'];
-            $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
-            if($stmt->execute()==true){
-                header("Location: index.php?addsuccess=true");
-            }else{
-                $ERROR = 5;
-            }
+            $ERROR = 5;
         }
         break;
     default:
@@ -101,10 +100,11 @@ switch ($continue) {
             </div>
         <?php endif;?>
         <?php if ($continue==0):?>
-            <h2>Tétel hozzáadása</h2> <!-- goofy ahh font  -->
+            <!-- goofy ahh font  -->
+            <h2>Tétel hozzáadása</h2> 
             <form class="addform" method="post">
                 <label for="title">Tétel címe: </label>
-                <input type="text" name="title" id="title" <?php if(!empty($_POST['title'])): echo 'value="'.$_POST['title'].'"'; endif;?>><br><br>
+                <input type="text" name="title" id="title" <?php if(!empty($_POST['title'])): echo 'value="'.$_POST['title'].'"'; elseif(!empty($_SESSION['title'])): echo 'value="'.$_SESSION['title'].'"'; endif;?>><br><br>
                 <label for="class">Tantárgy</label>
                 <select name="class" id="class">
                     <option value="0">Kérem válasszon egy tantárgyat</option>
@@ -113,11 +113,7 @@ switch ($continue) {
                     <option value="3">Nyelvtan</option>
                 </select><br><br>
                 <p style="line-height: 0;">Vázlat:</p>
-                <textarea name="sketch" id="sketch">
-                    <?php if(!empty($_POST['sketch'])){
-                        echo $_POST['sketch'];
-                    } ?>
-                </textarea>
+                <textarea name="sketch" id="sketch"><?php if(!empty($_POST['sketch'])):echo $_POST['sketch']; elseif(!empty($_SESSION['sketch'])): echo $_SESSION['sketch']; endif;?></textarea>
                 <input type="hidden" name="continue" value="1"><br>
                 <button type="submit">Tovább</button>
             </form>
@@ -126,6 +122,7 @@ switch ($continue) {
             <form class="addform" method="post">
                 <textarea name="kidolg" id="kidolg"></textarea>
                 <input type="hidden" name="continue" value="2"><br>
+                <button type="submit" name="continue" value="0">Vissza</button>
                 <button type="submit">Feltöltés</button>
             </form>
         <?php endif;?>
