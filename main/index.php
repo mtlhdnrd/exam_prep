@@ -35,9 +35,9 @@ if(!empty($_GET['query'])){
             <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
         </nav>
     </header>
-    <main>
+    <main class="home">
         <!-- EDIT SUCCESS POPUP -->
-            <?php if(!empty($_GET['editsuccess'])): ?>
+            <?php if(!empty($_GET['editsuccess'])||!empty($_GET['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
                     <div class="toast-header">
                         <strong class="mr-auto">SUCCESS</strong>
@@ -46,7 +46,11 @@ if(!empty($_GET['query'])){
                         </button>
                     </div>
                     <div class="toast-body">
-                        Sikeres változtatás!
+                        <?php if($_GET['addsuccess']): ?>
+                            Sikeres hozzáadás!
+                        <?php elseif($_GET['editsuccess']): ?>
+                            Sikeres változtatás!
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endif;?>
@@ -57,27 +61,47 @@ if(!empty($_GET['query'])){
         </form>
         <div class="listing" id="tortdiv">
             <h2>Történelem</h2>
-            <ul>
-                <li><a href="tetel.php?tetelid=1">aha</a><a class="editbutton" href="edit.php?tetelid=1">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=2">aha</a><a class="editbutton" href="edit.php?tetelid=2">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=3">aha</a><a class="editbutton" href="edit.php?tetelid=3">módosítás</a></li>
-                <li><a href="tetel.php?tetelid=4">aha</a><a class="editbutton" href="edit.php?tetelid=4">módosítás</a></li>
-            </ul>
+            <div class="list-items">
+                <div class="tetelitems">
+                    <a href="tetel.php?tetelid=1" class="mid">
+                        <p>hfdhfdhdshhsrhftsraha</p>
+                    </a>
+                    <a class="editbutton" href="edit.php?tetelid=1">módosítás</a>
+                </div>
+                <div class="tetelitems">
+                <a href="tetel.php?tetelid=2" class="mid">
+                    <p>aha</p>
+                </a>
+                <a class="editbutton" href="edit.php?tetelid=2">módosítás</a>
+                </div>
+                <div class="tetelitems">
+                <a href="tetel.php?tetelid=3" class="mid">
+                    <p>aha</p>
+                </a>
+                    <a class="editbutton" href="edit.php?tetelid=3">módosítás</a>
+                </div>
+                <div class="tetelitems">
+                <a href="tetel.php?tetelid=4" class="mid">
+                    <p>aha</p>
+                </a>
+                <a class="editbutton" href="edit.php?tetelid=4">módosítás</a>
+                </div>
+            </div>
         </div>
         <div class="listing" id="iroddiv">
             <h2>Irodalom</h2>
-            <ul>
-                <li>aha</li>
-                <li>aha</li>
-                <li>aha</li>
+            <ul class="list-items">
+                <li><p>aha</p></li>
+                <li><p>aha</p></li>
+                <li><p>aha</p></li>
             </ul>
         </div>
         <div class="listing" id="nyelvdiv">
             <h2>Nyelvtan</h2>
-            <ul>
-                <li>aha</li>
-                <li>aha</li>
-                <li>aha</li>
+            <ul class="list-items">
+                <li><p>aha</p></li>
+                <li><p>aha</p></li>
+                <li><p>aha</p></li>
             </ul>
         </div>
     </main>
