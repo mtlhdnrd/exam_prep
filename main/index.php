@@ -2,22 +2,28 @@
 session_start();
 //IF SEARCH
 if(!empty($_GET['query'])){
+    echo '<script> console.log("search if initiated");</script>';
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
     // Check connection
     if ($conn->connect_error) {
         die("Csatlakozás sikertelen: " . $conn->connect_error);
     }
-    $items = []; //create return matrix
     $search = $_GET['query']; //get query
-    $sql = "SELECT cim FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
+    $sql = "SELECT id, cim, tantargyid FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;"; //write query
     $stmt = $conn ->prepare($sql); //prepare query
     $id = intval($search); // -||-
     $se = '"%'.$search.'%"';
-    $stmt->bind_param("sss",$se, $se, $se); //bind variables --- TBD: WHY THE FUCK DO YOU HAVE A PROBLEM I DON'T UNDERSTAND "The number of variables must match the number of parameters in the prepared statement" BITCH
-    if($stmt->execute()) { //if it doesn't die
+    $stmt->bind_param("sss",$se, $se, $se);
+    $items = []; //create return matrix
+    if($stmt->execute()==true){ //if it doesn't die
         $result = $stmt->get_result(); //get the stuff
-        while ($row = $result->fetch_assoc()) {
-            array_push($items, $row); //cram the stuff into the matrix
+        echo '<script> console.log("'.$result->num_rows.'");</script>'; /* DEBUG */
+        if ($result->num_rows>0){
+            echo '<script> console.log("result has rows");</script>'; /* DEBUG */
+            while ($row = $result->fetch_assoc()) {
+                $items[] = $row; //push it to the matrix
+            }
+            echo '<script> console.log("search items pushed");</script>'; /* DEBUG */
         }
     }
     $conn->close(); //the end
@@ -30,7 +36,7 @@ if(!empty($_GET['query'])){
     }
     $sql = "SELECT id, cim, tantargyid FROM tetelcimek;";
     $items = [];
-    if($conn->query($sql)) {
+    if($conn->query($sql)==true){
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -77,7 +83,6 @@ if(!empty($_GET['query'])){
             <div class="nav-item item3"><a href="#nyelvdiv">Nyelvtan</a></div>
         </nav>
     </header>
-    <main>
         <!-- EDIT SUCCESS POPUP -->
             <?php if(isset($_SESSION['editsuccess']) ||isset($_SESSION['addsuccess'])): ?>
                 <div class="toast" aria-live="assertive" aria-atomic="true" role="alert" data-delay="3000" style="position:fixed; top:30px; right:30px; z-index: 2;">
@@ -103,6 +108,7 @@ if(!empty($_GET['query'])){
             <input type="text" placeholder="Search..." name="query">
             <button type="submit">Search</button>
         </form>
+        <?php if(!empty($items)): ?>
         <div class="listing" id="tortdiv">
             <h2>Történelem</h2>
             <ul>
@@ -127,6 +133,11 @@ if(!empty($_GET['query'])){
                 <?php endforeach; ?>
             </ul>
         </div>
+        <?php else: ?>
+            <div class="noresult">
+                <h2>Nincs a keresésnek megfelelő tétel / nincsenek tételek az adatbázisban.</h2>
+            </div>
+        <?php endif;?>
     </main>
     <footer>
         Fejlesztők:
