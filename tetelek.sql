@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS tetelcimek (
     FOREIGN KEY (tantargyid) REFERENCES tantargyak(id)
 );
 INSERT INTO tantargyak (tantargy) VALUES ("Történelem"),("Irodalom"),("Nyelvtan");
-INSERT INTO tetelcimek (cim, vazlat, kidolgozas, modosit, tantargyid) VALUES ("anyad","faszat","geci",'2000-02-02',2); 
+INSERT INTO tetelcimek (cim, vazlat, kidolgozas, modosit, tantargyid) VALUES ("Felis Catus","masneven kozonseges hazimacska","avagy az elet egyik ertelme",'2000-02-02',2);
