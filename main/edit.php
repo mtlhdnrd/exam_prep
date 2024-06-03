@@ -10,7 +10,7 @@ $ERROR = null;
 $sql = "SELECT * FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $tetelid);
-if($stmt->execute()==true){
+if($stmt->execute()){
     $result = $stmt->get_result();
     $data = $result->fetch_assoc();
     $stmt->close();
@@ -25,7 +25,7 @@ if(!empty($_GET['update'])){
     $sql = "UPDATE tetelcimek SET cim=?, vazlat =?, kidolgozas=?, modosit=?, tantargyid=? WHERE tetelcimek.id=?;";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssii", $cim, $vazlat, $kidolg, $currentdate, $tanid, $tetelid);
-    if($stmt->execute()==true){
+    if($stmt->execute()){
         $conn->close();
         $_SESSION['editsuccess'] = true;
         session_write_close();

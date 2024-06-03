@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 $sql = "SELECT tetelcimek.id, cim, vazlat, kidolgozas, tantargy FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn ->prepare($sql); //prepare query
 $stmt->bind_param("i",$tetelid);
-if($stmt->execute()==true){
+if($stmt->execute()){
     $result = $stmt->get_result();
     $data = $result->fetch_assoc();
     $stmt->close();

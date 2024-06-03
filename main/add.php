@@ -40,7 +40,7 @@ switch ($continue) {
         $date = date("Y-m-d");
         $classid = $_SESSION['class'];
         $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
-        if($stmt->execute()==true){
+        if($stmt->execute()){
             session_unset();
             $_SESSION['addsuccess'] = true;
             session_write_close();
