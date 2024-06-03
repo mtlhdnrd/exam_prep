@@ -5,7 +5,7 @@ $conn = new mysqli("localhost","root","", "tetelek"); //create conn
 if ($conn->connect_error) {
     die("Csatlakozás sikertelen: " . $conn->connect_error);
 }
-$sql = "SELECT tetelcimek.id, cim, vazlat, kidolgozas, tantargy FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
+$sql = "SELECT tetelcimek.id, cim, vazlat, kidolgozas, tantargy, modosit FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn ->prepare($sql); //prepare query
 $stmt->bind_param("i",$tetelid);
 if($stmt->execute()){
@@ -28,7 +28,6 @@ $conn->close();
 <body class="tetelpage">
     <header class="full_head">
         <a href="index.php"><h1>Tételek</h1></a>
-        
     </header>
     <main class="tetel_main">
         <div class="listing">
@@ -43,7 +42,9 @@ $conn->close();
             <h2>kidolgozás: </h2>
             <p><?php echo nl2br(htmlspecialchars($data["kidolgozas"]));?></p>
         </div>
-
+        <div>
+            <p>Utoljára módosítva: <?php echo $data['modosit']?></p>
+        </div>
     <?php else: ?>
         <h1>PHP ERROR: DATA NOT RECEIVED</h1>
     <?php endif; ?>
