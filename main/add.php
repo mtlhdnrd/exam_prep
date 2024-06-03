@@ -96,7 +96,7 @@ switch ($continue) {
             </div>
         <?php endif;?>
         <?php if ($continue==0):?>
-            <!-- goofy ahh font  -->
+            
             <h1>Tétel hozzáadása</h1> 
             <form class="form" method="post">
                 <label for="title"><h3>Tétel címe: </h3></label>
@@ -120,8 +120,8 @@ switch ($continue) {
             <form class="addform" method="post">
                 <textarea name="kidolg" id="kidolg"></textarea>
                 <input type="hidden" name="continue" value="2"><br>
-                <button type="submit" name="continue" value="0">Vissza</button>
-                <button type="submit">Feltöltés</button>
+                <button type="submit" class="button"name="continue" value="0">Vissza</button>
+                <button type="submit" class="button">Feltöltés</button>
             </form>
         <?php endif;?>
         </div>

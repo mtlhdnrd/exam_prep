@@ -5,9 +5,9 @@ body {
 
 html {
     scrollbar-width: none;
+    height: 100%;
   }
 
-/* görgetés elrejtése webkit alapú böngészőkben (Chrome, Safari) */
 body::-webkit-scrollbar {
     display: none;
 }
@@ -142,8 +142,6 @@ li{
 
 a, a:hover, a:active, a:visited{
     color: white;
-    /* WHY DID YOU MAKE LINKS WHITE ON A WHITE BACKGROUND I WAS SO CONFUSED I THOUGHT IT WAS GONE */
-    /*FYM I DID NOT DO THAT*/
     text-decoration: none;
 }
 li>a, li>a:hover, li>a:active, li>a:visited{
@@ -250,7 +248,6 @@ figcaption{
     box-sizing: border-box;
 }
 
-/* TETEL ADD OLDAL */
 .form{
     width: 70%;
     margin: auto;
