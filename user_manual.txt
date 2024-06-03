@@ -1,0 +1,23 @@
+Adatbázis:
+A tetelek.sql fájl importálása a localhost/myphpadmin létrehozza az adatbázist és a szükséges táblákat.
+
+
+Web
+A tételkezeló mappát a xampp/htdocs mappába helyezve megnyitjuk a localhost/tételkezeló úton.
+A főoldal kilistázza az eddig létező tételeket tantárgyanként.
+Bármelyik oldalról visszatérni a főmenüre a Tételek címre kattintással lehetséges.
+Az adott tételcímekre kattintva megtekinthető a teljes tétel.
+
+Új tétel felvétel:
+A főoldalon lévő gomb elvezet az új tétel felvétele űrlaphoz. 
+A tételnek kötelező egy címet, tantárgyat és vázlatot megadni felvételor. A kidolgozás opcionális.
+A Tovább és Vissza gombokkal lehet mozogni a bekérések lépései között, a Feltöltés gombbal véglegesíteni.
+
+Módosítás:
+A kilistázott tételcímek melletti gombra kattintva kiadja az oldal a módosítás űrlapot. Az Elvetés gomb visszaállítja a nem módosított állapotba a tételt, a Frissítés pedig véglegesíti a módosítást.
+
+Keresés:
+A főoldalon lévő kereső mezőt használva lehet bármi alapján keresni (cím, váézlat, kidolgozás). A címet, majd a vázlatot priorizálja.
+
+
+Asztali alkalmazás:
