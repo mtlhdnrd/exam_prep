@@ -1,3 +1,7 @@
 # exam_prep
-idk mate
-some kinda bullshit school task preventing me from actually preparing me for the exams
+Topic organizer tool with a web and a desktop version that has prevented me from actually being productive.
+## Features
+- adding new topics
+- browsing topics by subject
+- editing topics
+- searching topics by title, draft or final text
