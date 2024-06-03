@@ -106,7 +106,7 @@ $conn->close();
                 <button type="submit" class="button" name="update" value="1">Frissítés</button>
             </form>
         <?php else: ?>
-            <h1>H O W.</h1>
+            <h1>PHP ERROR: DATA NOT RECEIVED</h1>
         <?php endif ?>
         </div>
     </main>

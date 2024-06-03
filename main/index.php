@@ -2,38 +2,28 @@
 session_start();
 //IF SEARCH
 if(!empty($_GET['query'])){
-    echo '<script> console.log("search if initiated");</script>'; // DEBUG
     $conn = new mysqli("localhost","root","", "tetelek"); //create conn
     // Check connection
     if ($conn->connect_error) {
         die("Csatlakozás sikertelen: " . $conn->connect_error);
     }
     $search = $_GET['query']; //get query
-    echo '<script> console.log("search query is: '.$search.'");</script>'; // DEBUG 
     $sql = "SELECT id, cim, tantargyid FROM tetelcimek WHERE cim LIKE ? OR vazlat LIKE ? OR kidolgozas LIKE ?;";
-    echo '<script> console.log("sql query: '.$sql.'");</script>'; // DEBUG 
     $stmt = $conn ->prepare($sql);
     $search_mod = '%'.$search.'%';
     $stmt->bind_param("sss", $search_mod, $search_mod, $search_mod);
     $items = [];
     switch ($stmt->execute()) {
         case true:
-            echo '<script> console.log("execute successful");</script>'; // DEBUG 
             $result = $stmt->get_result();
             if($result->num_rows>0){
-                echo '<script> console.log("'.$result->num_rows.' rows found");</script>'; // DEBUG 
                 while ($row = $result->fetch_assoc()){
                     $items[] = $row;
                 }
-                    echo '<script> console.log("items array loaded");</script>'; // DEBUG 
-                    echo '<script> console.log("'.$items[0]['id'].' || '.$items[0]['cim'].' || '.$items[0]['tantargyid'].'");</script>'; // DEBUG 
             }else{
-                echo '<script> console.log("no rows found");</script>'; // DEBUG 
             }
             break;
         case false:
-            echo '<script> console.log("execute falied");</script>'; // DEBUG 
-            echo '<script> console.log("Error: '.$stmt->error?:$conn->error.'");</script>'; // DEBUG
             break;
     }
     $conn->close(); //the end
@@ -59,7 +49,6 @@ if(!empty($_GET['query'])){
 $items_h = [];
 $items_l = [];
 $items_g = [];
-echo '<script> console.log("items[g length: '.count($items).'");</script>'; // DEBUG 
 foreach ($items as $var) {
     switch ($var['tantargy']) {
         case 'Történelem':
@@ -112,7 +101,6 @@ foreach ($items as $var) {
                             Sikeres hozzáadás!
                             <?php unset($_SESSION['addsuccess']);?>
                         <?php elseif(!empty($_SESSION['editcancel'])): ?>
-                            <script>console.log("did cancel get sent<?php $_SESSION['editcancel']?:"no" ?>")</script>       <!-- DEBBUG -->
                             Módosítások elvetve!
                             <?php unset($_SESSION['editcancel']);?>
                         <?php endif; ?>

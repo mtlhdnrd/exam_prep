@@ -45,7 +45,7 @@ $conn->close();
         </div>
 
     <?php else: ?>
-        <h1>shit went really fucking wrong somewhere, good job c:</h1>
+        <h1>PHP ERROR: DATA NOT RECEIVED</h1>
     <?php endif; ?>
     </div>
     </main>

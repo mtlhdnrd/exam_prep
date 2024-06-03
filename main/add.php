@@ -109,7 +109,6 @@ switch ($continue) {
             </div>
         <?php endif;?>
         <?php if ($continue==0):?>
-            <!-- goofy ahh font  -->
             <h1>Tétel hozzáadása</h1> 
             <form class="form" method="post">
                 <label for="title"><h3>Tétel címe: </h3></label>
