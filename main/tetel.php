@@ -33,7 +33,7 @@ $conn->close();
     <main class="tetel_main">
         <div class="listing">
     <?php if($data): ?>
-        <h1><?php echo $data['id'].". Tétel: ".$data["cim"];?></h1>
+        <h1><?php echo $data["cim"];?></h1>
         <h2><?php echo"Tantárgy: ".$data["tantargy"];?></h2>
         <div>
             <h2>vázlat: </h2>
