@@ -7,31 +7,31 @@ $continue = $_POST['continue'] ?? 0;
 $conn = new mysqli("localhost","root","", "tetelek"); //create conn
 $classes = [];
 $sql = "SELECT * FROM tantargyak;";
-if($conn->query($sql)){
+if($conn->query($sql)) {
     $result = $conn->query($sql);
-    if($result->num_rows>0){
-        while($row = $result->fetch_assoc()){
+    if($result->num_rows>0) {
+        while($row = $result->fetch_assoc()) {
             $classes[] = $row;
         }
     }
 }
 
 /* stage 1 return --> check for input errors */
-switch ($continue) {
+switch($continue) {
     case '1':
-        if(empty($_POST['title'])){
+        if(empty($_POST['title'])) {
             /* no cim = no next page */
             $continue = 0;
             $ERROR = 1;
-        }elseif(empty($_POST['class'])){
+        } elseif(empty($_POST['class'])) {
             /* didn't select class back to stage 1 */
             $continue = 0 ;
             $ERROR = 2;
-        }elseif(empty($_POST['sketch'])){
+        } elseif(empty($_POST['sketch'])) {
             /* no sketch = no next page */
             $continue = 0;
             $ERROR = 3;
-        }else{
+        } else{
             /* NO ERRORS, CONTINUE */
             $_SESSION['title'] = $_POST['title'];
             $_SESSION['class'] = $_POST['class'];
@@ -40,7 +40,7 @@ switch ($continue) {
         break;
     case '2':
         /* NO ERRORS --> PROCEED WITH UPLOAD */
-        $conn = new mysqli("localhost","root","", "tetelek"); //create conn
+        $conn = new mysqli("localhost", "root", "", "tetelek"); //create conn
         // Check connection
         if ($conn->connect_error) {
             die("Csatlakozás sikertelen: " . $conn->connect_error);
@@ -53,13 +53,13 @@ switch ($continue) {
         $date = date("Y-m-d");
         $classid = $_SESSION['class'];
         $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
-        if($stmt->execute()){
+        if($stmt->execute()) {
             session_unset();
             $_SESSION['addsuccess'] = true;
             session_write_close();
             header("Location: index.php");
             exit();
-        }else{
+        } else {
             $ERROR = 5;
         }
         break;
@@ -109,7 +109,7 @@ switch ($continue) {
             </div>
         <?php endif;?>
         <?php if ($continue==0):?>
-            <h1>Tétel hozzáadása</h1> 
+            <h1>Tétel hozzáadása</h1>
             <form class="form" method="post">
                 <label for="title"><h3>Tétel címe: </h3></label>
                 <br>
@@ -119,7 +119,7 @@ switch ($continue) {
                 <?php if($classes): ?>
                     <select name="class" id="class">
                         <option value="0" disabled selected>Kérem válasszon egy tantárgyat</option>
-                        <?php foreach($classes as $class){                            
+                        <?php foreach($classes as $class){
                             echo '<option value="'.$class['id'].'">'.$class['tantargy'].'</option>';
                         }?>
                     </select><br><br>
@@ -140,7 +140,7 @@ switch ($continue) {
         <?php endif;?>
         </div>
     </main>
-    
+
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
