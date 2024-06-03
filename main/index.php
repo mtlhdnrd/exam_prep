@@ -44,7 +44,7 @@ if(!empty($_GET['query'])){
     if ($conn->connect_error) {
         die("Csatlakozás sikertelen: " . $conn->connect_error);
     }
-    $sql = "SELECT id, cim, tantargyid FROM tetelcimek;";
+    $sql = "SELECT tetelcimek.id, cim, tantargy FROM tetelcimek INNER JOIN tantargyak On tetelcimek.tantargyid=tantargyak.id;";
     $items = [];
     if($conn->query($sql)) {
         $result = $conn->query($sql);
@@ -61,14 +61,14 @@ $items_l = [];
 $items_g = [];
 echo '<script> console.log("items[g length: '.count($items).'");</script>'; // DEBUG 
 foreach ($items as $var) {
-    switch ($var['tantargyid']) {
-        case '1':
+    switch ($var['tantargy']) {
+        case 'Történelem':
             array_push($items_h, $var);
             break;
-        case '2':
+        case 'Irodalom':
             array_push($items_l, $var);
             break;
-        case '3':
+        case 'Nyelvtan':
             array_push($items_g, $var);
             break;
         default:
