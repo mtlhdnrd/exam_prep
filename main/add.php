@@ -23,7 +23,7 @@ switch ($continue) {
             /* no cim = no next page */
             $continue = 0;
             $ERROR = 1;
-        }elseif($_POST['class'] == 0){
+        }elseif(empty($_POST['class'])){
             /* didn't select class back to stage 1 */
             $continue = 0 ;
             $ERROR = 2;
