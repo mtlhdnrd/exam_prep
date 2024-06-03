@@ -118,7 +118,7 @@ switch ($continue) {
                 <br>
                 <?php if($classes): ?>
                     <select name="class" id="class">
-                        <option value="0" disabled selected="selected">Kérem válasszon egy tantárgyat</option>
+                        <option value="0" disabled selected>Kérem válasszon egy tantárgyat</option>
                         <?php foreach($classes as $class){                            
                             echo '<option value="'.$class['id'].'">'.$class['tantargy'].'</option>';
                         }?>
