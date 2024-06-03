@@ -32,7 +32,7 @@ switch ($continue) {
         if ($conn->connect_error) {
             die("Csatlakozás sikertelen: " . $conn->connect_error);
         }
-        $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
+        $sql = "INSERT INTO tetelcimek (cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (?,?,?,?,?);";
         $stmt = $conn->prepare($sql);
         $title = $_SESSION['title'];
         $sketch = $_SESSION['sketch'];
