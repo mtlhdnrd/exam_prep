@@ -264,6 +264,15 @@ figcaption{
 }
 
 @media (max-width: 768px) {
+    .form textarea{
+        width: 100%;
+        min-width: unset;
+        
+    }
+
+    h1{
+        font-size: 300%;
+    }
 
     .nav-item {
         margin: 5px 0;
@@ -275,6 +284,10 @@ figcaption{
         padding: 0 10px;
     }
 
+    .main{
+        height: fit-content;
+    }
+
     .listing{
         justify-content: center;
     }
@@ -284,7 +297,7 @@ figcaption{
     }
 
     footer{
-        height: fit-content
+        height: fit-content;
     }
 
     .portrait {
@@ -296,11 +309,15 @@ figcaption{
 
     .portrait_div {
         margin-top: 30px;
-        height: 300px;
+        height: 226px;
         width: 225px;
     }
 
     .portrait_div:last-child {
         margin-bottom: 30px;
+    }
+
+    #devs{
+        height: fit-content;
     }
 }
