@@ -105,7 +105,7 @@ switch ($continue) {
                 <label for="class"><h3>Tantárgy</h3></label>
                 <br>
                 <select name="class" id="class">
-                    <option value="0">Kérem válasszon egy tantárgyat</option>
+                    <option value="0" disabled>Kérem válasszon egy tantárgyat</option>
                     <option value="1">Történelem</option>
                     <option value="2">Irodalom</option>
                     <option value="3">Nyelvtan</option>
