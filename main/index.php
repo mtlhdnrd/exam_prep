@@ -14,18 +14,13 @@ if(!empty($_GET['query'])){
     $search_mod = '%'.$search.'%';
     $stmt->bind_param("sss", $search_mod, $search_mod, $search_mod);
     $items = [];
-    switch ($stmt->execute()) {
-        case true:
-            $result = $stmt->get_result();
-            if($result->num_rows>0){
-                while ($row = $result->fetch_assoc()){
-                    $items[] = $row;
-                }
-            }else{
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        if($result->num_rows>0){
+            while ($row = $result->fetch_assoc()){
+                $items[] = $row;
             }
-            break;
-        case false:
-            break;
+        }
     }
     $conn->close(); //the end
     //IF NOT SEARCH
@@ -50,19 +45,21 @@ if(!empty($_GET['query'])){
 $items_h = [];
 $items_l = [];
 $items_g = [];
-foreach ($items as $var) {
-    switch ($var['tantargy']) {
-        case 'Történelem':
-            array_push($items_h, $var);
-            break;
-        case 'Irodalom':
-            array_push($items_l, $var);
-            break;
-        case 'Nyelvtan':
-            array_push($items_g, $var);
-            break;
-        default:
-            break;
+if($items){
+    foreach ($items as $var) {
+        switch ($var['tantargy']) {
+            case 'Történelem':
+                array_push($items_h, $var);
+                break;
+            case 'Irodalom':
+                array_push($items_l, $var);
+                break;
+            case 'Nyelvtan':
+                array_push($items_g, $var);
+                break;
+            default:
+                break;
+        }
     }
 }
 ?>
