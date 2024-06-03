@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 $sql = "SELECT tetelcimek.id, cim, vazlat, kidolgozas, tantargy FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn ->prepare($sql); //prepare query
 $stmt->bind_param("i",$tetelid);
-if($stmt->execute()==true){
+if($stmt->execute()){
     $result = $stmt->get_result();
     $data = $result->fetch_assoc();
     $stmt->close();
@@ -33,7 +33,7 @@ $conn->close();
     <main class="tetel_main">
         <div class="listing">
     <?php if($data): ?>
-        <h1><?php echo $data['id'].". Tétel: ".$data["cim"];?></h1>
+        <h1><?php echo $data["cim"];?></h1>
         <h2><?php echo"Tantárgy: ".$data["tantargy"];?></h2>
         <div>
             <h2>vázlat: </h2>
@@ -45,7 +45,7 @@ $conn->close();
         </div>
 
     <?php else: ?>
-        <h1>shit went really fucking wrong somewhere, good job c:</h1>
+        <h1>PHP ERROR: DATA NOT RECEIVED</h1>
     <?php endif; ?>
     </div>
     </main>

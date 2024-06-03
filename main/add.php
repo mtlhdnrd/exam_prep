@@ -3,6 +3,19 @@ session_start();
 $ERROR = 0;
 /* check for form stage */
 $continue = $_POST['continue'] ?? 0;
+/* get classes for select */
+$conn = new mysqli("localhost","root","", "tetelek"); //create conn
+$classes = [];
+$sql = "SELECT * FROM tantargyak;";
+if($conn->query($sql)){
+    $result = $conn->query($sql);
+    if($result->num_rows>0){
+        while($row = $result->fetch_assoc()){
+            $classes[] = $row;
+        }
+    }
+}
+
 /* stage 1 return --> check for input errors */
 switch ($continue) {
     case '1':
@@ -10,7 +23,7 @@ switch ($continue) {
             /* no cim = no next page */
             $continue = 0;
             $ERROR = 1;
-        }elseif($_POST['class'] == 0){
+        }elseif(empty($_POST['class'])){
             /* didn't select class back to stage 1 */
             $continue = 0 ;
             $ERROR = 2;
@@ -32,7 +45,7 @@ switch ($continue) {
         if ($conn->connect_error) {
             die("Csatlakozás sikertelen: " . $conn->connect_error);
         }
-        $sql = "INSERT INTO tetelcimek (id, cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (NULL,?,?,?,?,?);";
+        $sql = "INSERT INTO tetelcimek (cim, vazlat, kidolgozas, modosit, tantargyid) VALUES (?,?,?,?,?);";
         $stmt = $conn->prepare($sql);
         $title = $_SESSION['title'];
         $sketch = $_SESSION['sketch'];
@@ -40,7 +53,7 @@ switch ($continue) {
         $date = date("Y-m-d");
         $classid = $_SESSION['class'];
         $stmt->bind_param("ssssi", $title, $sketch, $kidolg, $date, $classid);
-        if($stmt->execute()==true){
+        if($stmt->execute()){
             session_unset();
             $_SESSION['addsuccess'] = true;
             session_write_close();
@@ -88,7 +101,7 @@ switch ($continue) {
                     <?php elseif($ERROR == 3):?>
                         Kérem adjon meg a vázlattot!
                     <?php elseif($ERROR == 4):?>
-                        Kérem adja meg a kidolgozást!
+                        currently isnt used
                     <?php elseif($ERROR == 5):?>
                         Sikertelen hozzáadás...
                     <?php endif; ?>
@@ -96,7 +109,6 @@ switch ($continue) {
             </div>
         <?php endif;?>
         <?php if ($continue==0):?>
-            
             <h1>Tétel hozzáadása</h1> 
             <form class="form" method="post">
                 <label for="title"><h3>Tétel címe: </h3></label>
@@ -104,12 +116,14 @@ switch ($continue) {
                 <input type="text" name="title" id="title" <?php if(!empty($_POST['title'])): echo 'value="'.$_POST['title'].'"'; elseif(!empty($_SESSION['title'])): echo 'value="'.$_SESSION['title'].'"'; endif;?>><br><br>
                 <label for="class"><h3>Tantárgy</h3></label>
                 <br>
-                <select name="class" id="class">
-                    <option value="0">Kérem válasszon egy tantárgyat</option>
-                    <option value="1">Történelem</option>
-                    <option value="2">Irodalom</option>
-                    <option value="3">Nyelvtan</option>
-                </select><br><br>
+                <?php if($classes): ?>
+                    <select name="class" id="class">
+                        <option value="0" disabled selected>Kérem válasszon egy tantárgyat</option>
+                        <?php foreach($classes as $class){                            
+                            echo '<option value="'.$class['id'].'">'.$class['tantargy'].'</option>';
+                        }?>
+                    </select><br><br>
+                <?php endif;?>
                 <p style="line-height: 0;">Vázlat:</p>
                 <textarea name="sketch" id="sketch"><?php if(!empty($_POST['sketch'])):echo $_POST['sketch']; elseif(!empty($_SESSION['sketch'])): echo $_SESSION['sketch']; endif;?></textarea>
                 <input type="hidden" name="continue" value="1"><br><br>

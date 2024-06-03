@@ -10,7 +10,7 @@ $ERROR = null;
 $sql = "SELECT * FROM tetelcimek INNER JOIN tantargyak ON tetelcimek.tantargyid=tantargyak.id WHERE tetelcimek.id=?;";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $tetelid);
-if($stmt->execute()==true){
+if($stmt->execute()){
     $result = $stmt->get_result();
     $data = $result->fetch_assoc();
     $stmt->close();
@@ -25,7 +25,7 @@ if(!empty($_GET['update'])){
     $sql = "UPDATE tetelcimek SET cim=?, vazlat =?, kidolgozas=?, modosit=?, tantargyid=? WHERE tetelcimek.id=?;";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssii", $cim, $vazlat, $kidolg, $currentdate, $tanid, $tetelid);
-    if($stmt->execute()==true){
+    if($stmt->execute()){
         $conn->close();
         $_SESSION['editsuccess'] = true;
         session_write_close();
@@ -71,19 +71,19 @@ $conn->close();
                         <?php 
                         switch($data['tantargyid']){
                             case'1':
-                                echo '<option value="1" selected="seleced">Történelem</option>';
+                                echo '<option value="1" selected>Történelem</option>';
                                 echo '<option value="2">Irodalom</option>';
                                 echo '<option value="3">Nyelvtan</option>';
                                 break;
                             case '2':
                                 echo '<option value="1">Történelem</option>';
-                                echo '<option value="2" selected="seleced">Irodalom</option>';
+                                echo '<option value="2" selected>Irodalom</option>';
                                 echo '<option value="3">Nyelvtan</option>';
                                 break;
                             case '3':
                                 echo '<option value="1">Történelem</option>';
                                 echo '<option value="2">Irodalom</option>';
-                                echo '<option value="3" selected="seleced">Nyelvtan</option>';
+                                echo '<option value="3" selected>Nyelvtan</option>';
                                 break;
                         }
                         ?>
@@ -106,7 +106,7 @@ $conn->close();
                 <button type="submit" class="button" name="update" value="1">Frissítés</button>
             </form>
         <?php else: ?>
-            <h1>H O W.</h1>
+            <h1>PHP ERROR: DATA NOT RECEIVED</h1>
         <?php endif ?>
         </div>
     </main>
