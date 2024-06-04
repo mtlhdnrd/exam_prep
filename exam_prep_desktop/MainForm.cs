@@ -173,6 +173,7 @@ namespace exam_prep_desktop {
                 Width = addForm.ClientSize.Width / 2 - 30,
                 Location = new Point(draft.Right + 15, finalLabel.Bottom),
                 Multiline = true,
+                Enabled = draft.Text != "",
             };
 
             Label subjectLabel = new() {
@@ -197,6 +198,9 @@ namespace exam_prep_desktop {
             };
 
             draft.Height = addForm.ClientSize.Height - draft.Bottom - 15 - save.Height;
+            // hotfix to not allow final text with an empty draft (as easily, still doable but this is fine
+            // for a rudimentary hotfix in alpha or a demo)
+            draft.TextChanged += new EventHandler((_sender, _e) => { final.Enabled = draft.Text != ""; });
             final.Height = addForm.ClientSize.Height - final.Bottom - 15 - save.Height;
 
             cancel.Location = new Point(
@@ -286,6 +290,7 @@ namespace exam_prep_desktop {
                 Width = editForm.ClientSize.Width / 2 - 30,
                 Location = new Point(draft.Right + 15, finalLabel.Bottom),
                 Multiline = true,
+                Enabled = draft.Text != "",
             };
 
             Label subjectLabel = new() {
@@ -313,6 +318,9 @@ namespace exam_prep_desktop {
             };
 
             draft.Height = editForm.ClientSize.Height - draft.Bottom - 15 - save.Height;
+            // hotfix to not allow final text with an empty draft (as easily, still doable but this is fine
+            // for a rudimentary hotfix in alpha or a demo)
+            draft.TextChanged += new EventHandler((_sender, _e) => { final.Enabled = draft.Text != ""; });
             final.Height = editForm.ClientSize.Height - final.Bottom - 15 - save.Height;
 
             cancel.Location = new Point(
