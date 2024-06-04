@@ -5,3 +5,7 @@ Topic organizer tool with a web and a desktop version that has prevented me from
 - browsing topics by subject
 - editing topics
 - searching topics by title, draft or final text
+## Developers
+- Bakó Borka
+- Tokodi Mihály
+- Katona Bálint
