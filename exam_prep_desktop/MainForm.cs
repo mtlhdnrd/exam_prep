@@ -362,7 +362,10 @@ namespace exam_prep_desktop {
         private void OpenTopicViewWindow(Topic topic) {
             // the MessageBox class doesn't provide any way to change the text on its buttons, so i will just use OK
             // the only way to really do this would be to create my own class, which i am not willing to do right now
-            MessageBox.Show($"Vázlat:\n{topic.draft}\n\nKidolgozás:\n{topic.final}", topic.title);
+            MessageBox.Show(
+                $"Vázlat:\n{topic.draft}\n\nKidolgozás:\n{topic.final}\n\nUtoljára módosítva:\n{topic.lastModified:yyyy-MM-dd}",
+                topic.title
+            );
         }
 
         private void OpenSearchWindow(string query) {
